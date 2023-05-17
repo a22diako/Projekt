@@ -1,6 +1,6 @@
 package com.example.projekt;
 
-public class RecycleviewItem {
+public class RecyclerViewItem {
     private String title;
 
     public RecyclerViewItem(String title) {
