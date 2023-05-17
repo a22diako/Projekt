@@ -20,31 +20,25 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=a22diako";
-    private final String JSON_FILE = "hp url ";
+    private final String JSON_FILE = "hppoints.json";
 
-    ArrayList<RecyclerViewItem> items = new ArrayList<>();
+    ArrayList<HPpoints> items = new ArrayList<>();
     RecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        items = new ArrayList<>(Arrays.asList(
-                new RecyclerViewItem("HP2021"),
-                new RecyclerViewItem("HP2022"),
-                new RecyclerViewItem("HP2020")
-        ));
+//adapter = new RecyclerViewAdapter(this, items, new RecyclerViewAdapter.OnClickListener() {
+//@Override
+//public void onClick(RecyclerViewItem item) {
+  //      Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+   //     }
+     //   });
 
-adapter = new RecyclerViewAdapter(this, items, new RecyclerViewAdapter.OnClickListener() {
-@Override
-public void onClick(RecyclerViewItem item) {
-        Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-        }
-        });
-
-        RecyclerView view = findViewById(R.id.recyclerView);
-        view.setLayoutManager(new LinearLayoutManager(this));
-        view.setAdapter(adapter);
+       // RecyclerView view = findViewById(R.id.recycler_view);
+        //view.setLayoutManager(new LinearLayoutManager(this));
+        //view.setAdapter(adapter);
 
         new JsonFile(this, this).execute(JSON_FILE);
         }
@@ -53,11 +47,19 @@ public void onClick(RecyclerViewItem item) {
     public void onPostExecute(String json) {
         Log.d("MainActivity", json);
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Mountain>>() {}.getType();
-        ArrayList<Mountain> listOfMountains = gson.fromJson(json, type);
-        for(Mountain m : listOfMountains){
-            items.add(new RecyclerViewItem(m.getName()));
-        }
+        Type type = new TypeToken<List<HPpoints>>() {}.getType();
+        items = gson.fromJson(json, type);
+        ArrayList<RecyclerViewItem> listOfHPpoints = new ArrayList<>();
+        adapter = new RecyclerViewAdapter(this, listOfHPpoints, new RecyclerViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(RecyclerViewItem item) {
+            }
+        });
+
+        RecyclerView recycler_view = findViewById(R.id.recycler_view);
+        recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view.setAdapter(adapter);
+
     }
 
 }

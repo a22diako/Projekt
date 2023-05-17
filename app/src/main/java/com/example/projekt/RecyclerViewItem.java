@@ -11,4 +11,3 @@ public class RecyclerViewItem {
         return title;
     }
 }
-}
