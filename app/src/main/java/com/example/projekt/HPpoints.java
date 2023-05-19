@@ -1,5 +1,7 @@
 package com.example.projekt;
 
+import com.google.gson.annotations.SerializedName;
+
 public class HPpoints {
     private String name;
 
@@ -11,6 +13,18 @@ public class HPpoints {
     private String category;
 
     private String size;
+    private String cost;
+
+    public HPpoints(String name, String ID, String type, String company, String location, String category, String size, String cost) {
+        this.name = name;
+        this.ID = ID;
+        this.type = type;
+        this.company = company;
+        this.location = location;
+        this.category = category;
+        this.size = size;
+        this.cost = cost;
+    }
 
     public String getName() {
         return name;
@@ -75,22 +89,6 @@ public class HPpoints {
     public void setCost(String cost) {
         this.cost = cost;
     }
-
-    @Override
-    public String toString() {
-        return "HPpoints{" +
-                "name='" + name + '\'' +
-                ", ID='" + ID + '\'' +
-                ", type='" + type + '\'' +
-                ", company='" + company + '\'' +
-                ", location='" + location + '\'' +
-                ", category='" + category + '\'' +
-                ", size='" + size + '\'' +
-                ", cost='" + cost + '\'' +
-                '}';
-    }
-
-    private String cost;
 }
 
 

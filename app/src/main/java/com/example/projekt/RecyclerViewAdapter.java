@@ -11,50 +11,30 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-
-        private List<RecyclerViewItem> items;
-        private LayoutInflater layoutInflater;
-        private OnClickListener onClickListener;
-
-        RecyclerViewAdapter(Context context, List<RecyclerViewItem> items, OnClickListener onClickListener) {
-            this.layoutInflater = LayoutInflater.from(context);
-            this.items = items;
-            this.onClickListener = onClickListener;
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder>{
+        private List<HPpoints> hppoints;
+        public RecyclerViewAdapter(List<HPpoints> verktyg) {
+            this.hppoints = verktyg;
         }
 
-        @Override
         @NonNull
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new ViewHolder(layoutInflater.inflate(R.layout.itemcontainer, parent, false));
+        @Override
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemcontainer, parent, false);
+            return new MyViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.title.setText(items.get(position).getTitle());
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+            holder.id.setText(hppoints.get(position).getID());
+            holder.name.setText(hppoints.get(position).getName());
+            holder.location.setText(hppoints.get(position).getLocation());
+            holder.company.setText(hppoints.get(position).getCompany());
+            holder.size.setText(String.valueOf(hppoints.get(position).getSize()));
         }
 
         @Override
         public int getItemCount() {
-            return items.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            TextView title;
-
-            ViewHolder(View itemView) {
-                super(itemView);
-                itemView.setOnClickListener(this);
-                title = itemView.findViewById(R.id.title);
-            }
-
-            @Override
-            public void onClick(View view) {
-                onClickListener.onClick(items.get(getAdapterPosition()));
-            }
-        }
-
-        public interface OnClickListener {
-            void onClick(RecyclerViewItem item);
+            return hppoints.size();
         }
     }

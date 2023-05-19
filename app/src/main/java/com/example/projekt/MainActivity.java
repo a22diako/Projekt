@@ -1,8 +1,12 @@
 package com.example.projekt;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,50 +20,43 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
-    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=a22diako";
-    private final String JSON_FILE = "hppoints.json";
+    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=a21hugni";
+    private RecyclerView recyclerView;
+    private List<HPpoints> hppointsList;
+    private RecyclerViewAdapter adapter;
+    private Button button;
 
-    ArrayList<HPpoints> items = new ArrayList<>();
-    RecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//adapter = new RecyclerViewAdapter(this, items, new RecyclerViewAdapter.OnClickListener() {
-//@Override
-//public void onClick(RecyclerViewItem item) {
-  //      Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-   //     }
-     //   });
+        new JsonTask(this).execute(JSON_URL);
 
-       // RecyclerView view = findViewById(R.id.recycler_view);
-        //view.setLayoutManager(new LinearLayoutManager(this));
-        //view.setAdapter(adapter);
+        recyclerView = findViewById(R.id.recycler_view);
+        hppointsList = new ArrayList<HPpoints>();
+        adapter = new RecyclerViewAdapter(hppointsList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        button = findViewById(R.id.button);
 
-        new JsonFile(this, this).execute(JSON_FILE);
-        }
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, About.class);
+                startActivity(intent);
+            }
+        });
+    }
 
     @Override
     public void onPostExecute(String json) {
-        Log.d("MainActivity", json);
         Gson gson = new Gson();
-        Type type = new TypeToken<List<HPpoints>>() {}.getType();
-        items = gson.fromJson(json, type);
-        ArrayList<RecyclerViewItem> listOfHPpoints = new ArrayList<>();
-        adapter = new RecyclerViewAdapter(this, listOfHPpoints, new RecyclerViewAdapter.OnClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-            }
-        });
-
-        RecyclerView recycler_view = findViewById(R.id.recycler_view);
-        recycler_view.setLayoutManager(new LinearLayoutManager(this));
-        recycler_view.setAdapter(adapter);
-
+        Type type = new TypeToken<ArrayList<HPpoints>>(){}.getType();
+        ArrayList<HPpoints> data = gson.fromJson(json, type);
+        hppointsList.addAll(data);
+        adapter.notifyDataSetChanged();
     }
-
 }
