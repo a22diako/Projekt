@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
     public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder>{
         private List<HPpoints> hppoints;
-        public RecyclerViewAdapter(List<HPpoints> verktyg) {
-            this.hppoints = verktyg;
+        public RecyclerViewAdapter(List<HPpoints> hppoints) {
+
+            this.hppoints = hppoints;
         }
 
         @NonNull

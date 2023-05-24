@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
-    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=a21hugni";
+    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=a22diako";
     private RecyclerView recyclerView;
     private List<HPpoints> hppointsList;
     private RecyclerViewAdapter adapter;
@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     public void onPostExecute(String json) {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<HPpoints>>(){}.getType();
-        ArrayList<HPpoints> data = gson.fromJson(json, type);
-        hppointsList.addAll(data);
+        ArrayList<HPpoints> hppoints = gson.fromJson(json, type);
+        hppointsList.addAll(hppoints);
         adapter.notifyDataSetChanged();
     }
 }
