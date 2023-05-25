@@ -10,7 +10,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HEJ"
+        android:text="Välkommen!
+        Denna sida är för Högskoleprovets organisering där kommuner kan kolla på denna statistik för att sedan kunna ta beslut om hur mycket resurser som krävs utav vald kommun eller stad för kommande högskoleprov! "
         tools:layout_editor_absoluteX="163dp"
         tools:layout_editor_absoluteY="129dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
